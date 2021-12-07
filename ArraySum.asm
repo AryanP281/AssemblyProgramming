@@ -1,6 +1,12 @@
 .model small
 .stack 1024
 
+addNewLine MACRO
+mov dl,10
+mov ah,02h
+int 21h
+endm
+
 .data
 arrSize dw 0
 arrSum dw 0 
@@ -24,6 +30,9 @@ main proc
     ;Saving the entered array size in variable
     mov [arrSize],bx
     
+    ;Moving to new line
+    addNewLine
+    
     ;Getting the array elements
     lea dx,prompt2
     mov ah,09h
@@ -36,6 +45,8 @@ main proc
            pop cx  ;Restoring the counter value
            mov [si],bx ;Adding element to arr[i]
            add si,2 ;arr[i+1]
+           ;Adding newline
+           addNewLine
            loop arrInptLoop ;Looping
            
     ;Calculating sum
